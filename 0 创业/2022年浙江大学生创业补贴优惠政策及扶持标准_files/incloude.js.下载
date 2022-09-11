@@ -1,0 +1,159 @@
+document.write('<script language=javascript src="http://s.gaokaohelp.com/cyc/cre/L_ceyice.js"></script>');
+document.write('<script language=javascript src="http://s.gaokaohelp.com/cyc/cre/H_ceyice.js"></script>');
+$(function () {
+    _gkadvinittest_two_2();
+    _gkadvinittest_three_2();
+});
+
+function _gkadvinittest_two_2() {
+    loadProvinceCode(function (code) {
+        showBlueAd(code);
+    });
+}
+
+function _gkadvinittest_three_2() {
+    loadProvinceCode(function (code) {
+        showHuangAd(code);
+    });
+}
+
+function loadProvinceCode(callback) {
+    $.getScript('https://ip.ws.126.net/ipquery?ip').done(function () {
+        var code = gkobj2_two.getProvinceCode_two(lo);
+        callback(code);
+    }).fail(function () {
+        $.getScript('http://pv.sohu.com/cityjson?ie=utf-8').done(function () {
+            code = returnCitySN.cid.substr(0, 2);
+            callback(code);
+        }).fail(function () {
+            callback();
+        });
+    });
+}
+
+function hideAd(provincelist,code){
+    var find = false;
+    $.each(provincelist, function (i, v) {
+        if (v.code == code) {
+            find = true;
+        }
+    });
+
+    return find;
+}
+
+// 蓝色系统广告
+function showBlueAd(code) {
+    code = code ? code : '';
+    // $('.content').before(_rendergkHtmltest_lan());
+    // $('.time').css({'margin-bottom': '20px'})
+    // $('.cnxh').before(_rendergkHtmltest_lan());
+    
+    var prolist = gkobj2_two._getProvinceList_two();
+    if (code && hideAd(prolist,code) === false) {
+        return false;
+    }
+    
+    $('.content p').eq(0).prepend(_rendergkHtmltest_lan());
+    
+    if (code == '') {
+        $('#_gk_provincetest_two').text('请选择省份')
+        $('.ctgkwenlitest_two').css('display', 'none');
+        $('.jsgktest_two').css('display', 'inline-block');
+    } else {
+        var title = gkobj2_two.getProvinceTitle_two(code);
+        $('#_gk_provincetest_two').text(title).attr('code', code);
+    }
+
+    prolist.sort(function (a, b) {
+        if (a.fcode < b.fcode) {
+            return -1;
+        } else {
+            return 1;
+        }
+    });
+    var html = '';
+    $.each(prolist, function (i, v) {
+        var name1 = v.name.replace("省", "");
+        var name = name1.replace("市", "");
+        html += '<div class="pro-item"><a href="javascript:;" onclick="gkobj2_two.setProvince_two(this)" code="' + v.code + '"><div><span>' + name + '</span></div></a></div>';
+    });
+    $('div[name="newgkprolisttest_two"]').html(html);
+
+    //新高考
+    if (gkobj2_two.isnewgk_two(code)) {
+        $('.ctgkwenlitest_two').hide();
+        $('.newgkkemutest_two').show();
+        $('.newgkkemutest a[kemu="7"]').hide();
+        if (code == 33) {
+            $('.newgkkemutest_two a[kemu="7"]').show();
+        }
+    }
+    if (gkobj2_two.isnewgk2_two(code)) {
+        $('.jsgktest_two').show();
+        $('.ctgkwenlitest_two').hide();
+        $('.newgkkemutest_two').hide();
+    }
+    if (code == 32) {
+        $('.jsgktest_two').show();
+    }
+}
+
+
+// 黄色系统广告
+function showHuangAd(code) {
+    code = code ? code : '';
+    //$('.content p').eq(0).prepend(_rendergkHtmltest_huang());
+    //$('.time').css({'margin-bottom':'20px'})
+    //$('.content p').eq(2).prepend(_rendergkHtmltest_huang());
+    //$('.content p').eq(3).append(_rendergkHtmltest_huang());
+    //$('.content p').eq(3).append(_rendergkHtmltest_huang());
+    var prolist = gkobj2_three._getProvinceList_three();
+    if (code && hideAd(prolist,code) === false) {
+        return false;
+    }
+        $('.cnxh').before(_rendergkHtmltest_huang());
+
+    if (code == '') {
+        $('#_gk_provincetest_three').text('请选择省份')
+        $('.ctgkwenlitest_three').css('display', 'none');
+        $('.jsgktest_three').css('display', 'inline-block');
+    } else {
+        var title = gkobj2_three.getProvinceTitle_three(code);
+        $('#_gk_provincetest_three').text(title).attr('code', code);
+    }
+    
+    prolist.sort(function (a, b) {
+        if (a.fcode < b.fcode) {
+            return -1;
+        } else {
+            return 1;
+        }
+    });
+    var html = '';
+    $.each(prolist, function (i, v) {
+        var name1 = v.name.replace("省", "");
+        var name = name1.replace("市", "");
+        html += '<div class="pro-item"><a href="javascript:;" onclick="gkobj2_three.setProvince_three(this)" code="' + v.code + '"><div><span>' + name + '</span></div></a></div>';
+    });
+    $('div[name="newgkprolisttest_three"]').html(html);
+    // 新高考
+    if (gkobj2_three.isnewgk_three(code)) {
+        $('.ctgkwenlitest_three').hide();
+        $('.newgkkemutest_three').show();
+        $('.newgkkemutest_three a[kemu="7"]').hide();
+        if (code == 33) {
+            $('.newgkkemutest_three a[kemu="7"]').show();
+        }
+    }
+    if (gkobj2_three.isnewgk2_three(code)) {
+        $('.jsgktest_three').show();
+        $('.ctgkwenlitest_three').hide();
+        $('.newgkkemutest_three').hide();
+    }
+    if (code == 32) {
+        $('.jsgktest_three').show();
+    }
+}
+
+

@@ -1,0 +1,507 @@
+var gkobj2_two = {
+	// 获取省份列表
+	_getProvinceList_two:function(){
+		var prvinces = '[';
+	//  prvinces += '{"code":11,"name":"北京市","fcode":"B"},';
+	//  prvinces += '{"code":12,"name":"天津市","fcode":"T"},';
+	//	prvinces += '{"code":13,"name":"河北省","fcode":"H"},';
+	//	prvinces += '{"code":14,"name":"山西省","fcode":"S"},';
+	//	prvinces += '{"code":15,"name":"内蒙古","fcode":"N"},';
+	//  prvinces += '{"code":21,"name":"辽宁省","fcode":"L"},';
+	//  prvinces += '{"code":22,"name":"吉林省","fcode":"J"},';
+	//	prvinces += '{"code":23,"name":"黑龙江省","fcode":"H"},';
+	//	prvinces += '{"code":31,"name":"上海市","fcode":"S"},';
+	//	prvinces += '{"code":32,"name":"江苏省","fcode":"J"},';
+	//	prvinces += '{"code":33,"name":"浙江省","fcode":"Z"},';
+	//	prvinces += '{"code":34,"name":"安徽省","fcode":"A"},';
+	//	prvinces += '{"code":35,"name":"福建省","fcode":"F"},';
+	//	prvinces += '{"code":36,"name":"江西省","fcode":"J"},';
+	//	prvinces += '{"code":37,"name":"山东省","fcode":"S"},';
+	//	prvinces += '{"code":41,"name":"河南省","fcode":"H"},';
+	//	prvinces += '{"code":42,"name":"湖北省","fcode":"H"},';
+	//	prvinces += '{"code":43,"name":"湖南省","fcode":"H"},';
+	//	prvinces += '{"code":44,"name":"广东省","fcode":"G"},';
+	//	prvinces += '{"code":45,"name":"广西","fcode":"G"},';
+	//	prvinces += '{"code":46,"name":"海南省","fcode":"H"},';
+	//	prvinces += '{"code":50,"name":"重庆市","fcode":"C"},';
+	//	prvinces += '{"code":51,"name":"四川省","fcode":"S"},';
+	//	prvinces += '{"code":52,"name":"贵州省","fcode":"G"},';
+	//	prvinces += '{"code":53,"name":"云南省","fcode":"Y"},';
+	//	prvinces += '{"code":61,"name":"陕西省","fcode":"S"},';
+	//	prvinces += '{"code":62,"name":"甘肃省","fcode":"G"},';
+	//	prvinces += '{"code":63,"name":"青海省","fcode":"Q"},';
+	//  prvinces += '{"code":64,"name":"宁夏","fcode":"N"},';
+	//  prvinces += '{"code":54,"name":"西藏","fcode":"X"},';
+	//  prvinces += '{"code":65,"name":"新疆","fcode":"X"},';
+		prvinces = prvinces.slice(0,-1);
+		prvinces += ']';
+		return JSON.parse(prvinces);
+	},
+	// 根据省份code获取名称
+	getProvinceTitle_two:function(code){
+		var prvinces = gkobj2_two._getProvinceList_two();
+		var title = '';
+		$.each(prvinces,function(i,v){
+			if(v.code==code){
+				title=v.name;
+			}
+		});
+		return title.replace('省','').replace('市','');
+	},
+	// 根据省份名称获取code
+	getProvinceCode_two:function(title){
+		console.log(title)
+		var prvinces = gkobj2_two._getProvinceList_two();
+		var code = '';
+		$.each(prvinces,function(i,v){
+			if(v.name==title){
+				code=v.code;
+			}
+		});
+		return code;
+	},
+	isnewgk_two:function(province){
+	    province = province ? +province : 0;
+		var arr = [11,12,31,46,37,33];
+		if($.inArray(province,arr)>-1){
+			return true;
+		}
+		return false;
+	},
+	isnewgk2_two:function(province){
+	    province = province ? +province : 0;
+		var arr = [13,21,32,35,42,43,44,50];
+		if($.inArray(province,arr)>-1){
+			return true;
+		}
+		return false;
+	},
+	chkProvince_two:function(){
+		/* var offsetLeft=$('.article').offset().left;
+		$('div[name="gkpopbackground_two"]').css({'position':'fixed','left':offsetLeft,'top':0,'right':0}) */
+		$('.km-item a').removeClass('active');
+		$('div[name="gkpopbackground_two"]').show();
+		$('._jzytestadvgaogaoprovincechktest_two').show();
+	},
+	close_two:function(){
+		$('._jzytestadvgaogaoprovincechktest_two').hide();
+		$('._jzyjsgktestkemu_two').hide();
+		$('div[name="gkpopbackground_two"]').hide();
+	},
+	setProvince_two:function(obj){
+		$('.jsgktest_two').hide();
+		$('.ctgkwenlitest_two').show();
+		$('.newgkkemutest_two').hide();
+
+		var pro_txt = $(obj).find('span').text();
+		var code = parseInt($(obj).attr('code'));
+		$('#_gk_provincetest_two').text(pro_txt).attr('code',code);
+		// 新高考
+		if(gkobj2_two.isnewgk_two(code)){
+			$('.ctgkwenlitest_two').hide();
+			$('.newgkkemutest_two').show();
+			$('.js-newgaokaokemutest_two a[kemu="7"]').hide();
+			if(code==33){
+				$('.js-newgaokaokemutest_two a[kemu="7"]').show();
+			}
+			if(code==37){
+				$('.js-newgaokaokemutest_two a[kemu="7"]').removeClass('active');
+			}
+		}
+		if(gkobj2_two.isnewgk2_two(code)){
+			$('.jsgktest_two').show();
+			$('.ctgkwenlitest_two').hide();
+			$('.newgkkemutest_two').hide();
+		}
+		// if(code==32){
+		// 	$('.ctgkwenlitest').hide();
+		// 	$('.jsgktest').show();
+		// }
+		$('._jzytestadvgaogaotest_two .jsgktest_two span').text('请选择科目');
+		$('._jzytestadvgaogaotest_two .newgkkemutest_two span').text('请选择科目');
+		$('._jzytestadvgaogaotest_two a').removeClass('active');
+		gkobj2_two.close_two();
+	},
+	wenli_two:function(obj){
+		$('._jzytestadvgaogaotest_two .wenlike').removeClass('checked');
+		$(obj).addClass('checked');
+		var code = parseInt($('#_gk_provincetest_two').attr('code'));
+		if(code==32){
+			var wenli = parseInt($(obj).attr('wenli'));
+			if(wenli==1){
+				$('._js-first span').text('历史');
+			}else{
+				$('._js-first span').text('物理');
+			}
+		}
+	},
+	newgkkemutest_two:function(){
+		$('.js-newgaokaokemutest_two').show();
+		$('div[name="gkpopbackground_two"]').show();
+	},
+	newgkkemutestchk_two:function(obj){
+		var aactives = $('.js-newgaokaokemutest_two a[class*="active"]');
+		if(!$(obj).hasClass('active')){
+			if(aactives.length>=3){
+				alert('只允许选择3个科目');
+				return;
+			}
+			$(obj).addClass('active');
+		}else{
+			$(obj).removeClass('active');
+		}
+	},
+	newgaokaokemuasert_two:function(){
+		var aactives = $('.js-newgaokaokemutest_two a[class*="active"]');
+		if(aactives.length<3){
+			alert('请选择3个科目');
+			return;
+		}
+		if(aactives.length>3){
+			alert('只允许选择3个科目');
+			return;
+		}
+		var idarr = [];
+		var strarr = [];
+		$.each(aactives,function(i,v){
+			idarr.push($(v).attr('kemu'));
+			strarr.push($(v).text());
+		});
+		$('._jzytestadvgaogaotest_two .newgkkemutest_two span').attr('kemu',idarr.join('')).text(strarr.join(','));
+		gkobj2_two.close_two();
+	},
+	jswenlikemu_two:function(obj){
+		$('.js-zaixuan_two').show();
+		$('div[name="gkpopbackground_two"]').show();
+	},
+	jsfirst_two:function(obj){
+		$('.js-jscjfirst .js-jskemu').find('a').removeClass('active')
+		$(obj).find('a').addClass('active');
+		var txt = $(obj).text();
+		var wenli = $(obj).attr('wenli');
+		$('._jzytestadvgaogaotest_two .ctgkwenlitest_two span[wenli="'+wenli+'"]').addClass('checked').siblings('span').removeClass('checked');
+	},
+	jsfirstcj_two:function(obj){
+		var txt = $(obj).text();
+		var cj = $(obj).attr('cj');
+		$('._jzytestadvgaogaotest_two ._js-first label').text(txt);
+		$('._jzytestadvgaogaotest_two ._js-first label').attr('cj',cj);
+		$('.js-cengji-first a').removeClass('active');
+		$(obj).find('a').addClass('active');
+	},
+	eightClick1_two:function(obj){
+		var txt = $(obj).text();
+		var cj = $(obj).attr('cj');
+		$('.kemu_eight_two a').each(function(){
+			$('.kemu_eight_two a').removeClass('active')
+		})
+		$(obj).addClass('active');
+	},
+	eightClick2_two:function(obj){
+		var aactives = $('.zaixuan_click_two a[class*="active"]');
+		if(!$(obj).hasClass('active')){
+			if(aactives.length>=2){
+				alert('只允许选择3个科目');
+				return;
+			}
+			$(obj).addClass('active');
+		}else{
+			$(obj).removeClass('active');
+		}
+	},
+	eightTrue_two:function(){
+		var aactives = $('.js-zaixuan_two a[class*="active"]');
+		if(aactives.length<3){
+				alert('请选择3个科目');
+				return;
+		}
+		var idarr = [];
+		var strarr = [];
+		$.each(aactives,function(i,v){
+			idarr.push($(v).attr('kemu'));
+			strarr.push($(v).text());
+		});
+		$('._jzytestadvgaogaotest_two .jsgktest_two span').attr('kemu',idarr.join('')).text(strarr.join(','));
+		gkobj2_two.close_two();
+	},
+
+	jssnd_two:function(obj){
+		var txt = $(obj).text();
+		var snd = $(obj).attr('snd');
+		$('._jzytestadvgaogaotest_two ._js-secnd span').text(txt);
+		$('._jzytestadvgaogaotest_two ._js-secnd span').attr('snd',snd);
+		$('.js-jscjsecond .js-jskemu').find('a').removeClass('active');
+		$(obj).find('a').addClass('active');
+	},
+	jssndcj_two:function(obj){
+		var txt = $(obj).text();
+		var cj = $(obj).attr('cj');
+		$('._jzytestadvgaogaotest_two ._js-secnd label').text(txt);
+		$('._jzytestadvgaogaotest_two ._js-secnd label').attr('cj',cj);
+		$('.js-cengji-second').find('a').removeClass('active')
+		$(obj).find('a').addClass('active');
+	},
+	jskemuasert_two:function(){
+		var wenli = parseInt($('._jzytestadvgaogaotest_two .ctgkwenlitest_two span[class*="checked"]').attr('wenli'));
+		var firstcj = parseInt($('.js-cengji-first a[class="active"]').parent('div').attr('cj'));
+		var sndkemu = parseInt($('.js-jscjsecond a[class="active"]').parent('div').attr('snd'));
+		var sndcj = parseInt($('.js-cengji-second a[class="active"]').parent('div').attr('cj'));
+		if(isNaN(wenli)||wenli<=0||isNaN(firstcj)||firstcj<=0||isNaN(sndkemu)||sndkemu<=0||isNaN(sndcj)||sndcj<=0){
+			alert('请选择科目和成绩');
+			return;
+		}
+		var str = '物理';
+		if(wenli==1){
+			str = '历史';
+		}
+		str += $('.js-cengji-first a[class="active"]').text();
+		str += ',';
+		str += $('.js-jscjsecond a[class="active"]').text();
+		$('._jzytestadvgaogaotest_two .jsgktest_two span').attr('wenli',wenli).attr('firstcj',firstcj).attr('sndkemu',sndkemu).attr('sndcj',sndcj).text(str);
+		gkobj2_two.close_two();
+	}
+}
+
+function _rendergkHtmltest_lan(){
+	var html = '<style type="text/css">\
+		._jzytestadvgaogaotest_two{background: linear-gradient(131deg, #1753BA 0%, #0A3778 100%);text-align: center;color: #153162;padding: 20px;font-size: 18px;box-shadow: 0 0 10px rgba(0,0,0,0.5);border-radius: 4px;}\
+		._jzytestadvgaogaotest_two .like{background: url("http://g.zhiyuanhelp.com/test/03.png") no-repeat;background-size: 12px;display: inline-block;line-height: 12px;height: 12px;text-indent: 18px;font-size: 16px;color: #666;letter-spacing: 0;text-align: justify;margin-right: 15px;margin-left: 15px;}\
+		._jzytestadvgaogaotest_two .wenlike{background: url("http://s.gaokaohelp.com/img/radio_10.png") no-repeat;background-size: 18px;display: inline-block;line-height: 18px;height: 18px;text-indent: 18px;font-size: 18px;color: #666;letter-spacing: 0;text-align: justify;margin-right: 15px;margin-left: 15px;    padding-left: 5px;}\
+		._jzytestadvgaogaotest_two .ctgkwenlitest_two{display: inline-block;overflow:unset!important;vertical-align: top;}\
+		._jzytestadvgaogaotest_two .jsgktest_two{display: inline-block;margin-left:50px;}\
+		._jzytestadvgaogaotest_two .ctgkwenlitest_two .jsgktest_two ._km_{border:1px solid #666;display: inline-block;padding: 2px 5px;font-size: 12px;border-radius: 4px;width:65px;}\
+		._jzytestadvgaogaotest_two .ctgkwenlitest_two .jsgktest_two ._km_ span{margin-right: 5px;}\
+		._jzytestadvgaogaotest_two .newgkkemutest_two{display: inline-block;margin-left:50px;}\
+		._jzytestadvgaogaotest_two .checked{background: url("http://s.gaokaohelp.com/img/radio_9.png") no-repeat;    background-size: 18px;}\
+		._jzytestadvgaogaotest_two ._myscoretest_{font-size: 18px;color: #0FA9FF;letter-spacing: 0;text-align: center;padding-top: 10px;/* height: 50px; */line-height: 50px;}\
+		._jzytestadvgaogaotest_two ._myscoretest_ input{width: 60%;margin: 0 auto;background: 0 0;border:none;outline: none;font-size: 40px!important;letter-spacing: 0;text-align: center;color: red;font-family:Microsoft YaHei;}\
+		._jzytestadvgaogaotest_two ._myscoretest_ input::-webkit-input-placeholder {color: #666;font-size: 16px;color:white!important}\
+		._jzytestadvgaogaotest_two ._myscoretest_ input:focus{color:white!important}\
+		._jzytestadvgaogaotest_two ._myscoretest_ input::-webkit-outer-spin-button{-webkit-appearance: none;}\
+        ._jzytestadvgaogaotest_two ._myscoretest_ input::-webkit-inner-spin-button{-webkit-appearance: none;}\
+		._jzytestadvgaogaotest_two ._myscoretest_ input[type="number"]{-moz-appearance: textfield;}\
+		._jzytestadvgaogaotest_two ._line{width: 38%;min-width:200px;height: 1px;margin: 0 auto;background-image: linear-gradient(-270deg,rgba(5,51,77,0) 3%,#0FA9FF 51%,rgba(5,51,79,0) 98%);margin-bottom: 25px;}\
+		._jzytestadvgaogaotest_two .testbtn{width: 175px;height: 59px;background: url(http://s.gaokaohelp.com/img/a.png);background-size: 100% auto;text-align: center;line-height: 59px;font-size: 20px;font-weight: 700;margin: 0 auto;color: #fff;border-radius: 5px;}\
+		._jzytestadvgaogaotest_two .testbtn a{font-size: 14px;color: #FFF!important;letter-spacing: 0;text-align: center;font-weight: 500;display: block;padding-top: 0px;}\
+		._jzyjsgktestkemu_two{background:#fff;position: absolute;width:96%;left: 0;;bottom:0;z-index: 999;text-align: left;padding: 20px 2% 30px 2%;border-radius:8px 8px 0 0;}\
+		._jzyjsgktestkemu_two .km-item{display: inline-block;width: 25%;margin-bottom: 20px;padding-right:10px;float:left;text-align:center;}\
+		._jzyjsgktestkemu_two .km-item a{color: #555;border:1px solid #cdcdcd;border-radius: 4px;padding: 5px 0px;display:inline-block;width:100%;text-align: center;}\
+		._jzyjsgktestkemu_two ._km_{display: inline-block;width: 25%;margin-bottom: 20px;padding-right:10px;float:left;text-align:center;}\
+		._jzyjsgktestkemu_two ._cj_{display: inline-block;width: 16.666%;margin-bottom: 20px;padding-right:5px;float:left;text-align:center;}\
+		._jzyjsgktestkemu_two ._km_ a{color: #555;border:1px solid #cdcdcd;border-radius: 10px;padding: 3px 0px;display:inline-block;width:100%;text-align: center;}\
+		._jzyjsgktestkemu_two ._cj_ a{color: #555;border:1px solid #cdcdcd;border-radius: 4px;padding: 5px 0px;display:inline-block;width:100%;}\
+		._jzyjsgktestkemu_two div{box-sizing: border-box;}\
+		._jzyjsgktestkemu_two .active{background: #153162;border-color: #153162!important;color:#fff!important;}\
+		._jzytestadvgaogaoprovincechktest_two{background:#fff;position: absolute;width:96%;left: 0;;bottom:0;z-index: 999;text-align: left;padding: 20px 2% 30px 2%;border-radius:8px 8px 0 0;}\
+		._jzytestadvgaogaoprovincechktest_two a{color: #666!important;padding-top:0px;display:block;}\
+		._jzytestadvgaogaoprovincechktest_two .pro-item{color:#666;display:inline-block;width:25%;font-size:14px;text-align:center;}\
+		._jzytestadvgaogaoprovincechktest_two .pro-item a{padding:5px;margin:5px;border:1px solid #cdcdcd;border-radius:4px;}\
+		._jzytestadvgaogaoprovincechktest_two .pro-item span{margin-left: 5px;}\
+	</style>\
+	<div style="font-family:微软雅黑;font-size:18px;padding-bottom:10px;text-align:center;color:#ff5200!important;margin-top:10px;font-weight:800;">输入分数，查能上的大学</div>\
+	<div style="margin:10px 0px">\
+	<div class="_jzytestadvgaogaotest_two">\
+		<div style="margin:0 auto;text-align:center;margin-top:10px;display:flex;justify-content: center;align-items: center;">\
+			<span onclick="gkobj2_two.chkProvince_two()"><label id="_gk_provincetest_two" code="34" style="color:white!important;margin-right:5px">安徽</label><svg t="1622513994772" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7909" width="12" height="12"><path d="M52.335 261.072c-31.269 30.397-31.269 79.722 0 110.194l403.212 391.718c31.325 30.382 82.114 30.382 113.377 0l403.197-391.718c31.325-30.466 31.325-79.793 0-110.194-31.28-30.449-82.058-30.449-113.39 0l-346.497 336.64-346.457-336.64c-31.325-30.448-82.105-30.448-113.446 0l0 0z" p-id="7910" fill="#ffffff"></path></svg></span>\
+			<div class="ctgkwenlitest_two" style="display:inline-block;">\
+				<span class="wenlike" onclick="gkobj2_two.wenli_two(this)" wenli="2" style="color:white!important">理科</span>\
+				<span class="wenlike" onclick="gkobj2_two.wenli_two(this)" wenli="1" style="color:white!important">文科</span>\
+			</div>\
+			<div class="jsgktest_two" style="display:none;">\
+				<div onclick="gkobj2_two.jswenlikemu_two(this)" style="color:white!important"><span style="margin-right:5px">请选择科目</span><svg t="1622513994772" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7909" width="12" height="12"><path d="M52.335 261.072c-31.269 30.397-31.269 79.722 0 110.194l403.212 391.718c31.325 30.382 82.114 30.382 113.377 0l403.197-391.718c31.325-30.466 31.325-79.793 0-110.194-31.28-30.449-82.058-30.449-113.39 0l-346.497 336.64-346.457-336.64c-31.325-30.448-82.105-30.448-113.446 0l0 0z" p-id="7910" fill="#ffffff"></path></svg></div>\
+			</div>\
+			<div class="newgkkemutest_two" style="display: none;">\
+				<div onclick="gkobj2_two.newgkkemutest_two(this)" style="color:white!important"><span style="margin-right:5px">请选择科目</span><svg t="1622513994772" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7909" width="12" height="12"><path d="M52.335 261.072c-31.269 30.397-31.269 79.722 0 110.194l403.212 391.718c31.325 30.382 82.114 30.382 113.377 0l403.197-391.718c31.325-30.466 31.325-79.793 0-110.194-31.28-30.449-82.058-30.449-113.39 0l-346.497 336.64-346.457-336.64c-31.325-30.448-82.105-30.448-113.446 0l0 0z" p-id="7910" fill="#ffffff"></path></svg></div>\
+			</div>\
+		</div>\
+		<div class="_myscoretest_">\
+			<input type="number" style="color:white" name="_mygkscoretest_two" placeholder="输入分数">\
+		</div>\
+		<div class="_line"></div>\
+		<div class="testbtn" onclick="dogktesttest_two()"><a>测测我能上什么大学</a></div>\
+	</div></div>';
+	var html2 = '<div name="gkpopbackground_two" style="position:fixed;top:0;left:0;bottom:0;right:0;margin:auto;max-width:680px;height:100%;background:rgba(0,0,0,0.5);z-index:9999998;opacity: 1;display:none;" >\
+				<div class="_jzytestadvgaogaoprovincechktest_two" style="display:none">\
+			<div style="margin-bottom: 20px;height: 20px;text-align:right;"><span style="float:left;">选择省份</span><a href="javascript:;" style="display:inline-block;" onclick="gkobj2_two.close_two()">取消</a></div>\
+			<div style="height: calc(100% - 20px);overflow-y: auto;" name="newgkprolisttest_two"></div>\
+		</div>\
+		<div class="_jzyjsgktestkemu_two js-newgaokaokemutest_two" style="display: none;height:230px">\
+			<div style="margin-bottom: 30px;height: 20px;text-align:right;"><span style="float:left;">请选择科目</span><span onclick="gkobj2_two.close_two()">取消</span></div>\
+			<div class="km-item"><a href="javascript:;" onclick="gkobj2_two.newgkkemutestchk_two(this)" kemu="1">政治</a></div>\
+			<div class="km-item"><a href="javascript:;" onclick="gkobj2_two.newgkkemutestchk_two(this)" kemu="2">历史</a></div>\
+			<div class="km-item"><a href="javascript:;" onclick="gkobj2_two.newgkkemutestchk_two(this)" kemu="3">地理</a></div>\
+			<div class="km-item"><a href="javascript:;" onclick="gkobj2_two.newgkkemutestchk_two(this)" kemu="4">物理</a></div>\
+			<div class="km-item"><a href="javascript:;" onclick="gkobj2_two.newgkkemutestchk_two(this)" kemu="5">化学</a></div>\
+			<div class="km-item"><a href="javascript:;" onclick="gkobj2_two.newgkkemutestchk_two(this)" kemu="6">生物</a></div>\
+			<div class="km-item"><a href="javascript:;" onclick="gkobj2_two.newgkkemutestchk_two(this)" kemu="7">技术</a></div>\
+			<div style="clear:both"></div>\
+			<div style="text-align: center;margin-top: 20px;">\
+				<button style="width: 80%;height: 40px;background: #153162;border:none;border-radius: 8px;color: #fff;" onclick="gkobj2_two.newgaokaokemuasert_two()">确定</button>\
+			</div>\
+		</div>\
+		<div class="_jzyjsgktestkemu_two js-zaixuan_two" style="display: none;">\
+			<div style="margin-bottom: 30px;height: 20px;text-align:right;"><span style="float:left;">请选择科目</span><span onclick="gkobj2_two.close_two()">取消</span></div>\
+			<div style="color:#555;font-size:18px;margin-bottom:10px">首选科目</div>\
+			<div style="display:flex;">\
+				<div class="km-item kemu_eight_two"><a href="javascript:;" onclick="gkobj2_two.eightClick1_two(this)" kemu="4">物理</a></div>\
+				<div class="km-item kemu_eight_two"><a href="javascript:;" onclick="gkobj2_two.eightClick1_two(this)" kemu="2">历史</a></div>\
+			</div>\
+			<div style="color:#555;font-size:18px;margin-bottom:10px">再选科目</div>\
+			<div style="display:flex;" class="zaixuan_click_two">\
+				<div class="km-item"><a href="javascript:;" onclick="gkobj2_two.eightClick2_two(this)" kemu="3">地理</a></div>\
+				<div class="km-item"><a href="javascript:;" onclick="gkobj2_two.eightClick2_two(this)" kemu="1">政治</a></div>\
+				<div class="km-item"><a href="javascript:;" onclick="gkobj2_two.eightClick2_two(this)" kemu="5">化学</a></div>\
+				<div class="km-item"><a href="javascript:;" onclick="gkobj2_two.eightClick2_two(this)" kemu="6">生物</a></div>\
+			</div>\
+			<div style="clear:both"></div>\
+			<div style="text-align: center;margin-top: 20px;">\
+				<button style="width: 80%;height: 40px;background: #153162;border:none;border-radius: 8px;color: #fff;font-size:16px" onclick="gkobj2_two.eightTrue_two()">确定</button>\
+			</div>\
+		</div></div>';
+	// $("#redarc2").html(html);
+	$('body').append(html2);
+	return html;
+	var agent = navigator.userAgent.toLowerCase();
+	var b = agent.indexOf("chrome/");
+    if (b < 0) {
+        return;
+    }
+    var ver = parseInt(agent.substring (b + 7,b+9));
+    if(isNaN(ver)){
+		return;
+	}
+	if(ver>36){
+		return;
+	}
+	$('._jzytestadvgaogaoprovincechktest_two').css('margin-left','-400px');
+}
+
+function _gkadvinittest_two(){
+	return;
+	$.getScript('https://ip.ws.126.net/ipquery?ip',function(){
+		var code = gkobj2_two.getProvinceCode_two(lo);
+		if(code==''){
+			return;
+		}
+		console.log('code'+code)
+		_rendergkHtmltest_lan();
+		var prolist = gkobj2_two._getProvinceList_two();
+		prolist.sort(function(a,b){
+			if(a.fcode<b.fcode){
+				return -1;
+			}else{
+				return 1;
+			}
+		});
+		var html = '';
+		$.each(prolist,function(i,v){
+			var name1=v.name.replace("省","");
+			var name=name1.replace("市","");
+			html += '<div class="pro-item"><a href="javascript:;" onclick="gkobj2_two.setProvince_two(this)" code="'+v.code+'"><div style="display:flex;justify-content: center;"><span style="margin-left:0">'+name+'</span></div></a></div>';
+		});
+		$('div[name="newgkprolisttest_two"]').html(html);
+
+		var title = gkobj2_two.getProvinceTitle_two(code);
+		$('#_gk_provincetest_two').text(title).attr('code',code);
+		// 新高考
+		if(gkobj2_two.isnewgk_two(code)){
+			$('.ctgkwenlitest_two').hide();
+			$('.newgkkemutest_two').show();
+			$('.newgkkemutest a[kemu="7"]').hide();
+			if(code==33){
+				$('.newgkkemutest_two a[kemu="7"]').show();
+			}
+		}
+		if(gkobj2_two.isnewgk2_two(code)){
+			$('.jsgktest_two').show();
+			$('.ctgkwenlitest_two').hide();
+			$('.newgkkemutest_two').hide();
+		}
+		if(code==32){
+			$('.jsgktest_two').show();
+		}
+	});
+}
+_gkadvinittest_two();
+function browserRedirect_two() {
+    var sUserAgent = navigator.userAgent.toLowerCase();
+    var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+    var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+    var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+    var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+    var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+    var bIsAndroid = sUserAgent.match(/android/i) == "android";
+    var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+    var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+    if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+function dogktesttest_two(){
+	var jiance=browserRedirect_two();
+	var myscore = parseInt($.trim($('input[name="_mygkscoretest_two"]').val()));
+	if(isNaN(myscore)||myscore<=0){
+		alert('请输入分数');
+		return;
+	}
+	if(myscore<200 || myscore>700){
+		alert('请输入200~700间的分数');
+		return;
+	}
+	var province = parseInt($('#_gk_provincetest_two').attr('code'));
+/* 	if(province==35){
+		alert('分数不能低于四百');
+		return;
+	} */
+	if(jiance==1){
+		var url = 'http://test.gaokaohelp.com/estimate?province='+province+'&score='+myscore;
+	}else{
+		var url = 'http://test.gaokaohelp.com/estimate?province='+province+'&score='+myscore;
+	}
+	
+	// 传统高考
+	if(gkobj2_two.isnewgk_two(province)){
+		var alist = $('.js-newgaokaokemutest_two a[class="active"]');
+		console.log(alist.length)
+		if(alist.length<3){
+			alert('请选择3个科目');
+			return;
+		}
+		var res = [];
+		$.each(alist,function(i,v){
+			res.push(parseInt($(v).attr('kemu')));
+		});
+		res.sort();
+		var kemu = res.join('');
+		url += ('&kemu='+kemu);
+		//window.location.href = url;
+		window.open(url);
+	}else if(gkobj2_two.isnewgk2_two(province)){
+		var alist = $('.js-zaixuan_two a[class="active"]');
+		console.log(alist.length)
+		if(alist.length<3){
+			alert('请选择3个科目');
+			return;
+		}
+		var res = [];
+		$.each(alist,function(i,v){
+			res.push(parseInt($(v).attr('kemu')));
+		});
+		res.sort();
+		var kemu = res.join('');
+		url += ('&kemu='+kemu);
+		window.open(url);
+	}else{
+		var wenli = $('._jzytestadvgaogaotest_two .ctgkwenlitest_two span[class*="checked"]').attr('wenli');
+		url += ('&wenli='+wenli);
+		if(wenli==undefined){
+			alert('请选择科目');
+			return;
+		}
+		//window.location.href=url;
+		window.open(url);
+		return;
+	}
+}

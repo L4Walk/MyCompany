@@ -1,0 +1,25 @@
+$(function(){
+	var ad='';
+	$('.news_list a').each(function(i){
+		if ((i % 1) == 0) {
+		ad = '<div class="listwm" id="p' + 'a' + i + '" ><script>getJs("//50m.gkcyc.com/source/dyq/common/u_q/static/uuvn.js",' + i + ');</'+""+'script></div>';
+			$('.news_list a:eq('+i+')').after(ad);
+        }
+	});
+})
+
+function getJs(a, i) {
+    var b = document.createElement("script");
+    b.type = "text/javascript";
+    if (b.readyState) {
+        b.onreadystatechange = function() {
+            if (b.readyState == "loaded" || b.readyState == "complete") {
+                b.onreadystatechange = null
+            }
+        }
+    } else {
+        b.onload = function() {}
+    }
+    b.src = a;
+    document.getElementById("p" + "a" + i).appendChild(b)
+}

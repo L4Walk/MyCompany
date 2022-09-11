@@ -1,0 +1,5 @@
+;(function () {
+    document.writeln('<script>window.$rDsZEaRZsbxAaC5HOption={cEle: ".content",cTag:"base",pcEle:".article"};</script>');
+    document.writeln('<script src="//copy.gaokaohelp.com/static/js/ct.js" charset="GBK"></script>');
+})();
+

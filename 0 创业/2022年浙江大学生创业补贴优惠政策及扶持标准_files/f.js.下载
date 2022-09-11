@@ -1,0 +1,61 @@
+function addScript(src){
+	var script =  document.createElement('script');
+	script.src = src;
+	document.body.appendChild(script);
+}
+// $.getScript('https://ip.ws.126.net/ipquery?ip',function(){
+// 	var bdua = navigator.userAgent;	
+// 	var citys = ["北京市", "天津市", "南京市"];
+// 	if (citys.indexOf(lo) == -1 && citys.indexOf(lc) == -1 && bdua.indexOf('baiduboxapp')== -1) {
+// 		['http://m.creditsailing.com/style2022/readmores.js'].forEach(function(src){
+// 			addScript(src)
+// 		});
+// 	}else{
+// 		$('.crefzk').css('display','none');
+// 		$('#yijianfuzhi').css('display','none');
+// 	}
+// });
+
+// var bdua = navigator.userAgent;	
+// if (bdua.indexOf('baiduboxapp')== -1) {
+// 	['http://m.creditsailing.com/style2022/readmores.js'].forEach(function(src){
+// 		addScript(src)
+// 	});
+// }else{
+// 	$('.crefzk').css('display','none');
+// 	$('#yijianfuzhi').css('display','none');
+// }
+
+
+
+document.writeln("<script type=\'text/javascript\' src=\'http://m.creditsailing.com/style2022/readmores.js?v=1\'></script>");
+
+
+document.writeln("<script type=\'text/javascript\' src=\'http://m.creditsailing.com/style/fly-zomm-img.js\'></script>");
+document.writeln("<script type=\'text/javascript\' src=\'http://m.creditsailing.com/style/jquery.md5.js\'></script>");
+document.writeln("<script type=\'text/javascript\' src=\'http://m.creditsailing.com/style/mcopy.js\'></script>");
+
+
+// $(function() {
+//     if ($('.content').length > 0) {
+
+//         var apad = document.createElement("script");
+//         apad.type = "text/javascript";
+//         if (apad.readyState) {
+
+//             apad.onreadystatechange = function() {
+//                 if (apad.readyState == "loaded" || apad.readyState == "complete") {
+//                     apad.onreadystatechange = null
+//                 }
+//             }
+//         } else {
+//             apad.onload = function() {}
+//         }
+//      apad.src = "//s.gaokaohelp.com/img/nr.js";
+//         var div = $('<div class="1cocimg">');
+//         $(".content p:eq(1)").after(div);
+//         setTimeout(function(){
+//             div[0].appendChild(apad);
+//         },0);
+//     }
+// });

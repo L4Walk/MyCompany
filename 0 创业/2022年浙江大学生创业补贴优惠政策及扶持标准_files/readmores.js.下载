@@ -1,0 +1,23 @@
+
+$(function(){
+
+var conHeight = $(".content").outerHeight(true);
+if(conHeight>=800){
+  $(".content").height(700);
+  $(".crefzk").addClass("on-hover");
+  $(".crezk").click(function(){
+    $(".content").css('height','auto');
+    $(this).hide().siblings().show();
+    $(".crefzk").removeClass("on-hover");
+  });
+  $(".cresq").click(function(){
+    $(".content").animate({"height":700},300);
+    $(this).hide().siblings().show();
+    $(".crefzk").addClass("on-hover");
+  })
+}else{
+  $(".crefzk").hide();  
+}
+
+
+});
